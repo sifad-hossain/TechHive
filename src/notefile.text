@@ -1,0 +1,6 @@
+1. create a context as below
+        export const DataContext = createContext()
+2. wrap the children components with context provider
+
+
+3. access context value

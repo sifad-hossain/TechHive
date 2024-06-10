@@ -3,39 +3,40 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Container from "../container/Container";
+import ReviewSection from "../../../components/ReviewSection/ReviewSection";
 
 
 const ProductDetail = () => {
-    
-    const [service, setService] = useState({})
-    const {id} = useParams()
-    useEffect(() => {
-        fetch('http://localhost:4000/products')
-            .then(res => res.json())
-            .then(data => {
-                const products = data.find(item => item?._id == id)
-                setService(products)
-                console.log(data, id);
-            })
-    }, [id]);
-   const {product_name, description, product_image, externalLink} = service;
-    return (
-        <>
-          <Container>
-      <section className='bg-white '>
-        <div className='container px-6 py-10 mx-auto'>
-          <div className='lg:flex lg:items-center'>
-          <div className='hidden lg:flex lg:items-center lg:w-1/2 lg:justify-center'>
-              <img
-                className='w-[28rem] h-[28rem] object-cover xl:w-[34rem] xl:h-[34rem] rounded-full'
-                src={product_image}
-                alt=''
-              />
-            </div>
-            <div className='w-full space-y-12 lg:w-1/2 '>
-                
 
-            <div className='flex justify-end gap-3 mb-5'>
+  const [service, setService] = useState({})
+  const { id } = useParams()
+  useEffect(() => {
+    fetch('http://localhost:4000/products')
+      .then(res => res.json())
+      .then(data => {
+        const products = data.find(item => item?._id == id)
+        setService(products)
+        console.log(data, id);
+      })
+  }, [id]);
+  const { product_name, description, product_image, externalLink } = service;
+  return (
+    <>
+      <Container>
+        <section className='bg-white '>
+          <div className='container px-6 py-10 mx-auto'>
+            <div className='lg:flex lg:items-center'>
+              <div className='hidden lg:flex lg:items-center lg:w-1/2 lg:justify-center'>
+                <img
+                  className='w-[28rem] h-[28rem] object-cover xl:w-[34rem] xl:h-[34rem] rounded-full'
+                  src={product_image}
+                  alt=''
+                />
+              </div>
+              <div className='w-full space-y-12 lg:w-1/2 '>
+
+
+                <div className='flex justify-end gap-3 mb-5'>
                   <a
                     href={externalLink}
                     target='_blank'
@@ -54,31 +55,36 @@ const ProductDetail = () => {
                 </div>
 
 
-              <div>
-                
-                <h1 className='text-2xl font-semibold text-gray-800 capitalize lg:text-3xl '>
-                  {product_name} <br />                  
-                </h1>
+                <div>
 
-                <p className='mt-4 mb-5 text-gray-500 xl:mt-6 '>
-                  {description}
-                </p>
-              
+                  <h1 className='text-2xl font-semibold text-gray-800 capitalize lg:text-3xl '>
+                    {product_name} <br />
+                  </h1>
 
-                
+                  <p className='mt-4 mb-5 text-gray-500 xl:mt-6 '>
+                    {description}
+                  </p>
+
+
+
+                </div>
+
               </div>
-             
+
+
             </div>
-           
-            
+
+            <hr className='my-12 border-gray-200 dark:border-gray-700' />
           </div>
 
-          <hr className='my-12 border-gray-200 dark:border-gray-700' />
-        </div>
-      </section>
-    </Container>
-        </>
-    );
+
+          <hr className=' border-gray-200 dark:border-gray-700' />
+
+          <ReviewSection></ReviewSection>
+        </section>
+      </Container>
+    </>
+  );
 };
 
 export default ProductDetail;

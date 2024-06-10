@@ -9,7 +9,7 @@ const useProduct = () => {
     const { user } = useContext(AuthContext)
     const axiosSecure = useAxiosSecure()
   
-    const { data: tech = [],refetch } = useQuery({
+    const { data: tech = [],refetch, reset } = useQuery({
       queryKey: ['myProduct'],
       enabled: !!user?.email,
       queryFn: async () => {
@@ -18,7 +18,7 @@ const useProduct = () => {
         return res.data;
       },
     })
-    return [tech, refetch]
+    return [tech, refetch, reset]
 };
 
 export default useProduct;

@@ -14,6 +14,7 @@ import Dashboard from "../layout/Dashboard";
 import MyProfile from "../pages/dashboard/userDashboard/myProfile/MyProfile";
 import AllUsers from "../pages/dashboard/adminDashboard/allUsers/AllUsers";
 import AdminRoute from "./AdminRoute";
+import Common from "../pages/dashboard/common/Common";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -43,29 +44,33 @@ export const router = createBrowserRouter([
     ]
   },
   {
-    path: 'dashboard',
+    path: '/dashboard',
     // element: <privateRoute><Dashboard></Dashboard></privateRoute>
     element: <Dashboard></Dashboard>,
     children: [
       //User Dashboard
       {
-        path: '/dashboard/myProfile',
+       index: true,
+        element: <Common></Common>
+      },
+      {
+        path: 'myProfile',
         element: <MyProfile></MyProfile>
       },
       {
-        path: '/dashboard/myProducts',
+        path: 'myProducts',
         element: <MyProducts></MyProducts>
 
       },
       {
-        path: '/dashboard/addProducts',
+        path: 'addProducts',
         element: <AddProduct></AddProduct>
 
       },
 
       //Admin Routes
       {
-        path: '/dashboard/allUsers',
+        path: 'allUsers',
         element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
       }
     ]

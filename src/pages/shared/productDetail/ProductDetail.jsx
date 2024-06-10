@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Container from "../container/Container";
 import ReviewSection from "../../../components/ReviewSection/ReviewSection";
+import Testimonials from "../../../components/testimonials/Testimonials";
 
 
 const ProductDetail = () => {
@@ -81,6 +82,7 @@ const ProductDetail = () => {
           <hr className=' border-gray-200 dark:border-gray-700' />
 
           <ReviewSection></ReviewSection>
+          <Testimonials></Testimonials>
         </section>
       </Container>
     </>

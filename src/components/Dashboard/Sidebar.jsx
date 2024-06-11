@@ -9,8 +9,13 @@ import { GrLogout } from "react-icons/gr";
 const Sidebar = () => {
     const {logout} = useAuth()
     //TODO: get isadimn value from the database
-    const [isAdmin] = useAdmin();
-    console.log(isAdmin);
+    const [isAdmin, isAdminLoading] = useAdmin();
+
+    console.log(isAdmin, isAdminLoading);
+    if(isAdminLoading){
+        return <p>loading</p>
+    }
+    
     return (
         <>
             <div className="w-[20%] min-h-full    flex flex-col justify-between overflow-x-hidden bg-gray-100  space-y-6 px-2 py-4  inset-y-0 left-0 transform">

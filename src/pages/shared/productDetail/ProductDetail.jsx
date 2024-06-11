@@ -39,7 +39,8 @@ const ProductDetail = () => {
 
                 <div className='flex justify-end gap-3 mb-5'>
                   <a
-                    href={externalLink}
+                    // href={externalLink}
+                    href='externalLink'
                     target='_blank'
                     className='relative block text-lg group disabled:cursor-not-allowed'
                   >

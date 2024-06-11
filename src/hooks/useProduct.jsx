@@ -14,7 +14,7 @@ const useProduct = () => {
       enabled: !!user?.email,
       queryFn: async () => {
         const res = await axiosSecure.get(`/products/${user.email}`)
-        console.log(res);
+        // console.log(res);
         return res.data;
       },
     })

@@ -2,6 +2,7 @@ import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword,
 import { createContext, useEffect, useState } from "react";
 import auth from '../../firebase/Firbase.config'
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import axios from "axios";
 export const AuthContext = createContext(null)
 
 //Social auth provider
@@ -33,6 +34,31 @@ const AuthProvider = ({ children }) => {
         })
     }
 
+      // Get token from server
+  const getToken = async email => {
+    const { data } = await axios.post(
+        "http://localhost:4000/jwt",
+      { email },
+      { withCredentials: true }
+    )
+    localStorage.setItem('access-token', data.token)
+    return data
+  }
+
+  // save user
+  const saveUser = async user => {
+    const currentUser = {
+      email: user?.email,
+      role: 'guest',
+      status: 'Verified',
+    }
+    const { data } = await axios.put(
+      `http://localhost:4000/user`,
+      currentUser
+    )
+    return data
+  }
+
 
     // sign in user
     const signInUser = (email, password) => {
@@ -58,30 +84,24 @@ const AuthProvider = ({ children }) => {
         signOut(auth)
     }
 
-    //Observer
-    useEffect(() => {
-        const unSubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUser(user);
-            }
-            if (user) {
-                // get token and store client
-                const userInfo = { email: user.email }
-                axiosPublic.post('/jwt', userInfo)
-                .then(res =>{
-                    if (res.data) {
-                        localStorage.setItem('access-token', res.data.token)
-                    }
-                })
-            }
-            else {
-                //TODO; remove token (if token sotred in he client side: Local storage, cahing, in memory)
-                localStorage.removeItem('access-token')
-            }
-            setLoading(false);
-        });
-        return () => unSubscribe()
-    }, [axiosPublic])
+   // onAuthStateChange
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, currentUser => {
+      setUser(currentUser)
+      if (currentUser) {
+        getToken(currentUser.email)
+        saveUser(currentUser)
+      }
+      else{
+        localStorage.removeItem('access-token')
+      }
+      setLoading(false)
+
+    })
+    return () => {
+      return unsubscribe()
+    }
+  }, [])
 
     const allValues = {
         createUser,

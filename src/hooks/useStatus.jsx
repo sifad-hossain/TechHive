@@ -1,15 +1,14 @@
 
-
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./useAxiosPublic";
 
-const useProducts = () => {
+const useStatus = (id) => {
     const axiosPublic = useAxiosPublic()
 
    const {data: product =[], refetch, isLoading} = useQuery({
-    queryKey: ['product'],
+    queryKey: ['status', id],
     queryFn: async () => {
-        const res = await axiosPublic.get('/products')
+        const res = await axiosPublic.patch(`/product/status/${id}`)
         return res.data;
     },
     retry: 3,
@@ -18,4 +17,4 @@ const useProducts = () => {
    return [product, refetch, isLoading]
 };
 
-export default useProducts;
+export default useStatus;

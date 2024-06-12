@@ -15,7 +15,7 @@ const ProductQueue = () => {
     const featuredHandler = async (id) => {
         console.log('feauted', id);
         const { data } = await axios.patch(
-            `http://localhost:4000/tech/${id}`, { isFeatured: true }
+            `https://tech-hive-server.vercel.app/tech/${id}`, { isFeatured: true }
         )
         setFeatured(data)
         toast.success('Product is featured now')
@@ -25,7 +25,7 @@ const ProductQueue = () => {
     const approveHandler = async (id, isApproved) => {
         console.log('approved', id);
         const { data } = await axios.patch(
-            `http://localhost:4000/tech/${id}`, 
+            `https://tech-hive-server.vercel.app/tech/${id}`, 
             // { isApproved: 'Approved' }
             { isApproved: isApproved ? 'Approved' : 'Rejected' }
         )

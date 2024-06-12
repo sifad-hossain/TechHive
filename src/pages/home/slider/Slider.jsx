@@ -16,8 +16,7 @@ import Container from '../../shared/container/Container';
 const Slider = () => {
     return (
         <>
-            <Container>
-                <Swiper
+             <Swiper
                     style={{
                         '--swiper-navigation-color': '#fff',
                         '--swiper-pagination-color': '#fff',
@@ -111,7 +110,6 @@ const Slider = () => {
                     </SwiperSlide>
                     
                 </Swiper>
-            </Container>
         </>
     );
 };

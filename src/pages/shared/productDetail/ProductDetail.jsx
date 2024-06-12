@@ -20,7 +20,7 @@ const ProductDetail = () => {
   const [product, isLoading, refetch ] = useProducts()
   const { id } = useParams()
   useEffect(() => {
-    fetch('http://localhost:4000/products')
+    fetch('https://tech-hive-server.vercel.app/products')
       .then(res => res.json())
       .then(data => {
         const products = data.find(item => item?._id == id)

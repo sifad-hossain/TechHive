@@ -8,13 +8,13 @@ const Dashboard = () => {
 
     return (
         <div className="w-[100%] mt-20   flex">
-            <div className="w-[25%] border-2 border-yellow-400">
+            <div className="w-[25%] ">
                 {/* Sidebar */}
             <Sidebar></Sidebar>
             </div>
 
             {/* Outlet --> Dynamic content */}
-            <div className=" w-[70%] mx-auto border-2 border-rose-600">
+            <div className=" w-[70%] mx-auto ">
                 <Outlet></Outlet>
             </div>
         </div>

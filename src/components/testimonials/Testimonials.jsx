@@ -12,13 +12,13 @@ import 'swiper/css/navigation';
 const Testimonials = () => {
     const [reviews, setReviews] = useState([])
     useEffect(() => {
-        fetch('http://localhost:4000/addedreview')
+        fetch('https://tech-hive-server.vercel.app/addedreview')
             .then(res => res.json())
             .then(data => setReviews(data))
     }, []);
 
     return (
-        <section className="my-20">
+        <section className="my-20 ">
          
 
             <Swiper

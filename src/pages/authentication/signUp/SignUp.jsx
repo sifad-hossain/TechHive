@@ -19,7 +19,6 @@ const SignUp = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
     //navigation systems
     const navigate = useNavigate()
-    const from = '/';
 
 
     const onSubmit = data => {
@@ -61,7 +60,7 @@ const SignUp = () => {
                                     console.log('user added to the database');
                                     // reset()
                                     toast('user creadted succesfully')
-                                    navigate(from)
+                                    navigate('/')
                                     console.log(result.user);
                                 }
                             })

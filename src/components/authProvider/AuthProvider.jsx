@@ -37,7 +37,7 @@ const AuthProvider = ({ children }) => {
       // Get token from server
   const getToken = async email => {
     const { data } = await axios.post(
-        "http://localhost:4000/jwt",
+        "https://tech-hive-server.vercel.app/jwt",
       { email },
       { withCredentials: true }
     )
@@ -49,11 +49,11 @@ const AuthProvider = ({ children }) => {
   const saveUser = async user => {
     const currentUser = {
       email: user?.email,
-      role: 'guest',
+      role: 'user',
       status: 'Verified',
     }
     const { data } = await axios.put(
-      `http://localhost:4000/user`,
+      `https://tech-hive-server.vercel.app/user`,
       currentUser
     )
     return data

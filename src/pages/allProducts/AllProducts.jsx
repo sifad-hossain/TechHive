@@ -12,7 +12,7 @@ const AllProducts = () => {
     const { user } = useContext(AuthContext)
     const axiosPublic = useAxiosPublic()
     const [product, isLoading, refetch] = useProducts();
-    const { searchValue, setSearchValue } = useState([])
+    const { searchValue, setSearchValue } = useState('')
 
     const allProducts = product.filter(p => p.isApproved === 'Approved')
 
@@ -61,7 +61,7 @@ const AllProducts = () => {
 
                 <div className='flex flex-col justify-center items-center max-w-2xl mx-auto md:px-8 pt-16 '>
                     {/* form Section */}
-                    <form className='flex flex-col items-center w-full mb-4 md:flex-row'>
+                    <form onSubmit={(e) => handleSearch(e, searchValue)} className='flex flex-col items-center w-full mb-4 md:flex-row'>
                         <input
                             placeholder='Search by tags'
                             value={searchValue}
@@ -72,7 +72,7 @@ const AllProducts = () => {
                         />
 
                         <button
-                            onClick={e => handleSearch(e, searchValue)}
+                            // onClick={e => handleSearch(e, searchValue)}
                             type='submit'
                             className='relative  inline-flex items-center justify-center text-lg group disabled:cursor-not-allowed'
                         >

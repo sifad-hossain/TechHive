@@ -6,10 +6,10 @@ import useStatus from '../../hooks/useStatus'
 const ProductQueueRow = () => {
 const [product, refetch, isLoading] = useStatus()
 
-  const approveHandler = async (id, flag) => {
+  const approveHandler = async (_id, flag) => {
     if (flag) {
       try {
-        await product(id, { isApproved: 'Approved' })
+        await product(_id, { isApproved: 'Approved' })
         toast.success('Product approved')
         refetch()
       } catch (err) {
@@ -18,9 +18,9 @@ const [product, refetch, isLoading] = useStatus()
       }
     } else {
       console.log('Product Rejected')
-      console.log(id)
+      console.log(_id)
       try {
-        await updateStatus(id, { isApproved: 'Rejected' })
+        await product(_id, { isApproved: 'Rejected' })
         toast.success('Product Rejected')
         refetch()
       } catch (err) {
@@ -29,9 +29,9 @@ const [product, refetch, isLoading] = useStatus()
       }
     }
   }
-  const featuredHandler = async (id, flag) => {
+  const featuredHandler = async (_id, flag) => {
     try {
-      await updateStatus(id, { isFeatured: flag })
+      await product(_id, { isFeatured: flag })
       toast.success(
         flag ? 'Product is featured now' : 'Featured Status Reverted'
       )
@@ -43,21 +43,9 @@ const [product, refetch, isLoading] = useStatus()
   }
   return (
     <tr>
+     
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <div className='flex items-center'>
-          <div className='flex-shrink-0'>
-            <div className='block relative'>
-              <img
-                alt='profile'
-                src={product?.image}
-                className='mx-auto object-cover rounded h-10 w-15 '
-              />
-            </div>
-          </div>
-        </div>
-      </td>
-      <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
-        <p className='text-gray-900 whitespace-no-wrap'>{product?.name}</p>
+        <p className='text-gray-900 whitespace-no-wrap'>{product?.product_name}</p>
       </td>
 
       <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>

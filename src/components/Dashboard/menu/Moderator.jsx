@@ -1,10 +1,13 @@
-import React from 'react';
+
+import { FcSettings } from 'react-icons/fc';
+import { NavLink } from 'react-router-dom';
 
 const Moderator = () => {
     return (
-        <div>
-            
-        </div>
+        <ul className="menu">
+            <li><FcSettings className="w-5 h-5"></FcSettings><NavLink 
+            to='productQueue'>ProductQueue</NavLink></li>
+        </ul>
     );
 };
 

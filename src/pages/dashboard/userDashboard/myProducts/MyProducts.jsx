@@ -39,6 +39,8 @@ const MyProducts = () => {
     });
   }
 
+
+
   return (
     <>
 
@@ -107,7 +109,7 @@ const MyProducts = () => {
                           <td className='px-4 py-4 text-sm font-medium  whitespace-nowrap'>
                             <div className='inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-yellow-100/60 text-yellow-500'>
                               <span className='h-1.5 w-1.5 rounded-full bg-yellow-500'></span>
-                              <h2 className='text-sm font-bold '>Pending</h2>
+                              <h2 className='text-sm font-bold '>{product?.isApproved}</h2>
                             </div>
                           </td>
                           <td className='px-4 py-4 text-sm whitespace-nowrap'>

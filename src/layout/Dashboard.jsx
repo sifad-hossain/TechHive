@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-import useAdmin from "../hooks/useAdmin";
 import Sidebar from "../components/Dashboard/Sidebar";
 
 

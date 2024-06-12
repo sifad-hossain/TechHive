@@ -1,7 +1,7 @@
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import useProducts from "../../hooks/useProducts";
 import Container from "../shared/container/Container";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../components/authProvider/AuthProvider";
 import { toast } from "react-toastify";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
@@ -12,10 +12,11 @@ const AllProducts = () => {
     const { user } = useContext(AuthContext)
     const axiosPublic = useAxiosPublic()
     const [product, isLoading, refetch] = useProducts();
-    console.log(product);
-
+    const { searchValue, setSearchValue } = useState([])
 
     const allProducts = product.filter(p => p.isApproved === 'Approved')
+
+    console.log(allProducts);
 
     //onclick upvote button
     const updateVote = async (id, status, upvote, downvote, voterId) => {
@@ -39,12 +40,57 @@ const AllProducts = () => {
         }
     }
 
+    const handleSearch = (e, value) => {
+        console.log('hi i am search', e, value);
+        e.preventDefault()
+        if (value) {
+            (
+                product.filter(
+                    p => p?.isApproved === 'Approved' && p?.tag_input.includes(value)
+                )
+            )
+        } else {
+            (product.filter(p => p.isApproved === 'Approved'))
+        }
+    }
 
 
     return (
         <>
             <Container>
+
+                <div className='flex flex-col justify-center items-center max-w-2xl mx-auto md:px-8 pt-16 '>
+                    {/* form Section */}
+                    <form className='flex flex-col items-center w-full mb-4 md:flex-row'>
+                        <input
+                            placeholder='Search by tags'
+                            value={searchValue}
+                            onChange={e => setSearchValue(e.target.value)}
+                            required=''
+                            type='text'
+                            className='flex-grow w-full h-14 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-blue-400 focus:outline-none '
+                        />
+
+                        <button
+                            onClick={e => handleSearch(e, searchValue)}
+                            type='submit'
+                            className='relative  inline-flex items-center justify-center text-lg group disabled:cursor-not-allowed'
+                        >
+                            <span className='relative z-10 block px-5 py-3 overflow-hidden font-medium leading-tight text-gray-800 transition-colors duration-300 ease-out border-2 border-gray-900 rounded-lg group-hover:text-white'>
+                                <span className='absolute inset-0 w-full h-full px-5 py-3 rounded-lg bg-gray-50'></span>
+                                <span className='absolute left-0 w-48 h-48 -ml-2 transition-all duration-300 origin-top-right -rotate-90 -translate-x-full translate-y-12 bg-gray-900 group-hover:-rotate-180 ease'></span>
+                                <span className='relative'>Search</span>
+                            </span>
+                            <span
+                                className='absolute bottom-0 right-0 w-full h-12 -mb-1 -mr-1 transition-all duration-200 ease-linear bg-gray-900 rounded-lg group-hover:mb-0 group-hover:mr-0'
+                                data-rounded='rounded-lg'
+                            ></span>
+                        </button>
+                    </form>
+                </div>
+
                 <div className="grid grid-cols-3  mt-10 -z-10">
+
                     {
                         allProducts.map(tech =>
                             <div key={tech?._id} className="card space-y-5 mb-10 card-compact w-96 bg-base-100 shadow-xl">

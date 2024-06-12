@@ -164,6 +164,7 @@ const ProductDetail = () => {
             <hr className='my-12 border-gray-200 dark:border-gray-700' />
           </div>
           <hr className=' border-gray-200 dark:border-gray-700' />
+          {/* review section */}
           <ReviewSection></ReviewSection>
           <Testimonials></Testimonials>
         </section>

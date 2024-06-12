@@ -1,20 +1,23 @@
 import { Link } from 'react-router-dom'
 import useProducts from '../../../hooks/useProducts'
 import { toast } from 'react-toastify'
+import useStatus from '../../../hooks/useStatus'
 
 
 
 const ProductQueue = () => {
     const [product, refetch, isLoading] = useProducts()
+    const [feauters] = useStatus()
     if (isLoading) return <p>loading</p>
     console.log(product)
 
-    
-    const featuredHandler = async (_id, flag) => {
+
+    const featuredHandler = async (_id, res) => {
+        console.log('feauted');
         try {
-          await product(_id, { isFeatured: flag })
+          await feauters(_id, { isFeatured: res })
           toast.success(
-            flag ? 'Product is featured now' : 'Featured Status Reverted'
+            res ? 'Product is featured now' : 'Featured Status Reverted'
           )
           refetch()
         } catch (err) {
@@ -110,7 +113,7 @@ const ProductQueue = () => {
                                                             </div>
                                                             <div className='space-x-1'>
                                                                 <button
-                                                                    // onClick={() => featuredHandler(product._id, !product?.isFeatured)}
+                                                                    onClick={() => featuredHandler(p._id, !p?.isFeatured)}
                                                                     className='bg-green-200 text-green-900 px-2 py-1 rounded-lg w-28 disabled:cursor-not-allowed disabled:text-gray-500 disabled:bg-gray-200'
                                                                 >
                                                                     {p?.isFeatured ? 'Revert' : 'Make Featured'}

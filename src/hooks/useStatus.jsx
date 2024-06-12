@@ -4,7 +4,7 @@ import useAxiosPublic from "./useAxiosPublic";
 
 const useStatus = (id) => {
     const axiosPublic = useAxiosPublic()
-   const {data: product =[], refetch, isLoading} = useQuery({
+   const {data: feauters =[], refetch, isLoading} = useQuery({
     queryKey: ['status', id],
     queryFn: async () => {
         const res = await axiosPublic.patch(`/tech/${id}`)
@@ -14,7 +14,7 @@ const useStatus = (id) => {
    })   
 
 
-   return [product, refetch, isLoading]
+   return [feauters, refetch, isLoading]
 };
 
 export default useStatus;

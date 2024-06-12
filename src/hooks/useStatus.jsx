@@ -1,13 +1,13 @@
 
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "./useAxiosSecure";
+import useAxiosPublic from "./useAxiosPublic";
 
 const useStatus = (id) => {
-    const axiosSecure = useAxiosSecure()
+    const axiosPublic = useAxiosPublic()
    const {data: product =[], refetch, isLoading} = useQuery({
     queryKey: ['status', id],
     queryFn: async () => {
-        const res = await axiosSecure.patch(`/tech/${id}`)
+        const res = await axiosPublic.patch(`/tech/${id}`)
         return res.data;
     },
     retry: 3,

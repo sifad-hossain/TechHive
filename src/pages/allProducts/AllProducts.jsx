@@ -14,6 +14,9 @@ const AllProducts = () => {
     const [product, isLoading, refetch] = useProducts();
     console.log(product);
 
+
+    const allProducts = product.filter(p => p.isApproved === 'Approved')
+
     //onclick upvote button
     const updateVote = async (id, status, upvote, downvote, voterId) => {
         const data = await axiosPublic.patch(`/products/vote/${id}`, {
@@ -43,7 +46,7 @@ const AllProducts = () => {
             <Container>
                 <div className="grid grid-cols-3  mt-10 -z-10">
                     {
-                        product.map(tech =>
+                        allProducts.map(tech =>
                             <div key={tech?._id} className="card space-y-5 mb-10 card-compact w-96 bg-base-100 shadow-xl">
                                 <figure><img src={tech?.product_image} alt="Shoes" /></figure>
                                 <div className="card-body">

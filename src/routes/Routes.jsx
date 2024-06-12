@@ -17,6 +17,7 @@ import AdminRoute from "./AdminRoute";
 import Common from "../pages/dashboard/common/Common";
 import ProductQueue from "../pages/dashboard/moderatorDashboard/ProductQueue";
 import ModeratorRoute from "./ModeratorRoute";
+import ReportedProducts from "../pages/dashboard/moderatorDashboard/ReportedProducts"
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -73,6 +74,10 @@ export const router = createBrowserRouter([
       {
         path:'productQueue',
         element: <ModeratorRoute><ProductQueue></ProductQueue></ModeratorRoute>
+      },
+      {
+        path: 'reportedProducts',
+        element: <ModeratorRoute><ReportedProducts></ReportedProducts></ModeratorRoute>
       },
 
       //Admin Routes

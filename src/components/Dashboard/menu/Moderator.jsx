@@ -7,6 +7,8 @@ const Moderator = () => {
         <ul className="menu">
             <li><FcSettings className="w-5 h-5"></FcSettings><NavLink 
             to='productQueue'>ProductQueue</NavLink></li>
+            <li><FcSettings className="w-5 h-5"></FcSettings><NavLink 
+            to='reportedProducts'>ReportedProducts</NavLink></li>
         </ul>
     );
 };

@@ -1,26 +1,38 @@
 import { Link, useParams } from 'react-router-dom'
 import useProducts from '../../../hooks/useProducts'
 import { toast } from 'react-toastify'
-import {  useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 
 const ProductQueue = () => {
-    const [product, refetch, isLoading] = useProducts()
-    
+    const [product, isLoading, refetch] = useProducts()
+
     const [featured, setFeatured] = useState('')
-    const {id} = useParams()
+    const [approved, setApproved] = useState('')
+    const { id } = useParams()
     if (isLoading) return <p>loading</p>
-    console.log(product)
 
     const featuredHandler = async (id) => {
         console.log('feauted', id);
-        const {data} = await axios.patch(
+        const { data } = await axios.patch(
             `http://localhost:4000/tech/${id}`, { isFeatured: true }
         )
         setFeatured(data)
         toast.success('Product is featured now')
-        }
-        console.log(featured);
+    }
+    console.log(featured);
+
+    const approveHandler = async (id, isApproved) => {
+        console.log('approved', id);
+        const { data } = await axios.patch(
+            `http://localhost:4000/tech/${id}`, 
+            // { isApproved: 'Approved' }
+            { isApproved: isApproved ? 'Approved' : 'Rejected' }
+        )
+        setApproved(data)
+        toast.success('Product is approved now')
+    }
+    console.log(approved);
 
     return (
         <>
@@ -81,8 +93,7 @@ const ProductQueue = () => {
 
                                                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
                                                             <p className='text-gray-900 whitespace-no-wrap'>
-                                                                {/* {p?.isFeatured ? 'True' : 'False'} */}
-                                                                {p?.isFeatured ? 'true' : 'false'} 
+                                                                {p?.isFeatured ? 'true' : 'false'}
                                                             </p>
                                                         </td>
                                                         <td className='px-5 py-5 border-b border-gray-200 bg-white text-sm'>
@@ -94,7 +105,7 @@ const ProductQueue = () => {
                                                         <td className='px-5 space-y-1 py-5 border-b border-gray-200 bg-white text-sm '>
                                                             <div className='space-x-1'>
                                                                 <button
-                                                                    // onClick={() => approveHandler(product._id, true)}
+                                                                    onClick={() => approveHandler(p._id, true)}
                                                                     className='bg-green-200 text-green-900 px-2 py-1 rounded-lg w-28 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:text-gray-500'
                                                                     disabled={p?.isApproved === 'Approved'}
                                                                 >
@@ -103,7 +114,7 @@ const ProductQueue = () => {
 
 
                                                                 <button
-                                                                    // onClick={() => approveHandler(product._id, false)}
+                                                                    onClick={() => approveHandler(p._id, false)}
                                                                     className='bg-red-200 text-red-900 px-2 py-1 rounded-lg w-28 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:text-gray-500'
                                                                     disabled={p?.isApproved === 'Rejected'}
                                                                 >

@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 const AllProducts = () => {
     const { user } = useContext(AuthContext)
     const axiosPublic = useAxiosPublic()
-    const [product, refetch] = useProducts();
+    const [product, isLoading, refetch] = useProducts();
     console.log(product);
 
     //onclick upvote button
@@ -27,13 +27,10 @@ const AllProducts = () => {
 
     // UpVote OnClick
     const handleUpvote = async (id, status, upvote, downvote, voterId) => {
-        // console.log({ id, status, upvote, downvote, voterId })
         try {
             await updateVote(id, status, upvote, downvote, voterId)
-            // window.location.reload()
-            refetch()
             toast.success('Successfully UpVoted!')
-
+            refetch()
         } catch (err) {
             console.log(err)
         }

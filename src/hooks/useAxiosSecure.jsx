@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import useAuth from './useAuth'
 
 export const axiosSecure = axios.create({
+  // baseURL: "http://localhost:4000",
   baseURL: "https://tech-hive-server.vercel.app",
   withCredentials: true,
 })
@@ -11,6 +12,7 @@ const useAxiosSecure = () => {
   // const { logout } = useAuth();
   axiosSecure.interceptors.request.use(function (config) {
     const token = localStorage.getItem('access-token')
+    
     config.headers.authorization = `Bearer ${token}`;
     return config;
   }, function (error) {

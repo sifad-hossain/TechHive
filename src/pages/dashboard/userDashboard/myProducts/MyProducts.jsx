@@ -5,6 +5,8 @@ import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
 import useProduct from "../../../../hooks/useProduct";
+import { Link } from "react-router-dom";
+import ProductUpdated from "../../../../components/form/ProductUpdated";
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext)
@@ -112,10 +114,9 @@ const MyProducts = () => {
                               <h2 className='text-sm font-bold '>{product?.isApproved}</h2>
                             </div>
                           </td>
-                          <td className='px-4 py-4 text-sm whitespace-nowrap'>
-                            <FaEdit size={22} className="text-cyan-500 bg-white"></FaEdit>
-                          </td>
-
+                          <Link to={`/productUpdate/${product?._id}`} className='px-4 py-4 text-sm whitespace-nowrap'>
+                            <FaEdit  size={22} className="text-cyan-500 bg-white"></FaEdit>
+                          </Link>
 
                           <td
                             onClick={() => handleDelete(product._id)}

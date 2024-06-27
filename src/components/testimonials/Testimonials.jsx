@@ -1,14 +1,16 @@
 
-import { Navigation, Pagination, Autoplay, } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { useEffect,  useState } from "react";
-import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import SectionTitle from '../sectionTitle/SectionTitle';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Rating } from '@smastrom/react-rating';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 const Testimonials = () => {
     const [reviews, setReviews] = useState([])
     useEffect(() => {
@@ -16,10 +18,14 @@ const Testimonials = () => {
             .then(res => res.json())
             .then(data => setReviews(data))
     }, []);
+    console.log(reviews);
 
     return (
-        <section className="my-20 ">
-         
+        <section className="my-20">
+            <SectionTitle
+                subHeading={'what our client say'}
+                heading={'Testomonial'}
+            ></SectionTitle>
 
             <Swiper
                 spaceBetween={30}
@@ -33,7 +39,7 @@ const Testimonials = () => {
                 }}
                 navigation={true}
                 modules={[Autoplay, Pagination, Navigation]}
-               
+
                 className="mySwiper">
                 {
                     reviews.map(review => <SwiperSlide
@@ -43,14 +49,14 @@ const Testimonials = () => {
                             <Rating
                                 style={{ maxWidth: 180 }}
                                 value={review.rating}
-                                readOnly
                             ></Rating>
-                            <p className="py-8 text-2xl text-orange-500">{review.review}</p>
+                            <p className="py-8">{review.review}</p>
                             <p className="text-2xl text-orange-400">{review.name}</p>
                         </div>
-                    </SwiperSlide>)                    
+                    </SwiperSlide>)
                 }
             </Swiper>
+            <p>hi i am developer</p>
         </section>
     );
 };

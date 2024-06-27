@@ -1,18 +1,38 @@
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import useProducts from "../../hooks/useProducts";
 import Container from "../shared/container/Container";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../components/authProvider/AuthProvider";
 import { toast } from "react-toastify";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
+import useProducts from "../../hooks/useProducts";
 
 
 const AllProducts = () => {
     const { user } = useContext(AuthContext)
     const axiosPublic = useAxiosPublic()
     const [product, isLoading, refetch] = useProducts();
-    const { searchValue, setSearchValue } = useState('')
+
+
+    const [search, setSearch] = useState('')
+    const [searchText, setSearchText] = useState('')
+
+
+
+    useEffect(() => {
+        const getData = async () => {
+            const res = await axiosPublic.get(`/products-searching?search=${search}`)
+            product(res)
+        }
+        getData()
+    }, [axiosPublic, product, search])
+
+    const handleSearch = e => {
+        e.preventDefault()
+        setSearch(searchText)
+    }
+    console.log(search)
+
 
     const allProducts = product.filter(p => p.isApproved === 'Approved')
 
@@ -40,19 +60,6 @@ const AllProducts = () => {
         }
     }
 
-    const handleSearch = (e, value) => {
-        console.log('hi i am search', e, value);
-        e.preventDefault()
-        if (value) {
-            (
-                product.filter(
-                    p => p?.isApproved === 'Approved' && p?.tag_input.includes(value)
-                )
-            )
-        } else {
-            (product.filter(p => p.isApproved === 'Approved'))
-        }
-    }
 
 
     return (
@@ -61,19 +68,27 @@ const AllProducts = () => {
 
                 <div className='flex flex-col justify-center items-center max-w-2xl mx-auto md:px-8 pt-16 '>
                     {/* form Section */}
-                    <form onSubmit={(e) => handleSearch(e, searchValue)} className='flex flex-col items-center w-full mb-4 md:flex-row'>
+
+
+
+                    <form onSubmit={handleSearch} className='flex flex-col items-center w-full mb-4 md:flex-row'>
                         <input
-                            placeholder='Search by tags'
-                            value={searchValue}
-                            onChange={e => setSearchValue(e.target.value)}
-                            required=''
+                            // placeholder='Search by tags'
+                            // value={searchValue}
+                            // onChange={e => setSearchValue(e.target.value)}
+                            // required=''
                             type='text'
+                            name="search"
                             className='flex-grow w-full h-14 px-4 mb-3 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none md:mr-2 md:mb-0 focus:border-blue-400 focus:outline-none '
                         />
+
+
+
 
                         <button
                             // onClick={e => handleSearch(e, searchValue)}
                             type='submit'
+                            value='seacrh'
                             className='relative  inline-flex items-center justify-center text-lg group disabled:cursor-not-allowed'
                         >
                             <span className='relative z-10 block px-5 py-3 overflow-hidden font-medium leading-tight text-gray-800 transition-colors duration-300 ease-out border-2 border-gray-900 rounded-lg group-hover:text-white'>

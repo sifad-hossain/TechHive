@@ -25,8 +25,7 @@ const ProductQueue = () => {
     const approveHandler = async (id, isApproved) => {
         console.log('approved', id);
         const { data } = await axios.patch(
-            `https://tech-hive-server.vercel.app/tech/${id}`, 
-            // { isApproved: 'Approved' }
+            `https://tech-hive-server.vercel.app/tech/${id}`,
             { isApproved: isApproved ? 'Approved' : 'Rejected' }
         )
         setApproved(data)
@@ -113,13 +112,12 @@ const ProductQueue = () => {
                                                                 </button>
 
 
-                                                                <button
-                                                                    onClick={() => approveHandler(p._id, false)}
-                                                                    className='bg-red-200 text-red-900 px-2 py-1 rounded-lg w-28 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:text-gray-500'
-                                                                    disabled={p?.isApproved === 'Rejected'}
+                                        <button
+                         onClick={() => approveHandler(p._id, false)}
+       className='bg-red-200 text-red-900 px-2 py-1 rounded-lg w-28 disabled:bg-gray-200 disabled:cursor-not-allowed disabled:text-gray-500'
+                                              disabled={p?.isApproved === 'Rejected'}
                                                                 >
-                                                                    Reject
-                                                                </button>
+                                         </button>
 
 
 

@@ -1,68 +1,53 @@
-import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../../../../components/authProvider/AuthProvider";
-import axios from "axios";
 import { TagsInput } from "react-tag-input-component";
-import useAxiosPublic from "../../../../hooks/useAxiosPublic";
-import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { useEffect, useState } from "react";
+import Container from "../../pages/shared/container/Container";
+import { useLoaderData } from "react-router-dom";
 
 
-const AddProduct = () => {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm()
-    console.log(errors);
-    const { user } = useContext(AuthContext)
+const ProductUpdated = () => {
+    const { register, handleSubmit } = useForm()
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        const tech = useLoaderData() || {}
+        console.log(tech);
+
+    const { user } = useAuth()
     const [tags, setTags] = useState([]);
-    const axiosPublic = useAxiosPublic()
+
+    useEffect(() => {
+        if (tech.tag_input) {
+            setTags(tech.tag_input);
+        }
+    }, [tech]);
+
+    const [file, setFile] = useState(null);
+
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]);
+    };
 
     const onSubmit = async (data) => {
-        console.log(data);
-        const formData = new FormData();
-        formData.append('image', data.product_image[0]);
-        try {
-            const response = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOSTING_KEY}`, formData, {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            });
-            console.log(response.data.data.display_url);
-            const product = {
-                product_name: data.product_name,
-                product_image: response.data.data.display_url,
-                description: data.description,
-                user_name: user?.displayName,
-                user_image: user?.photoURL,
-                user_email: user?.email,
-                tag_input: tags,
-                external_Link: data.external_Link,
-                upVote: [],
-                downVote: [],
-                isFeatured: false,
-                isReported: false,
-                isApproved: 'Pending',
-            }
-            console.log(product);
-
-            const productItem = await axiosPublic.post('/products', product)
-            console.log(productItem.data);
-            if (productItem.data.insertedId) {
-                reset()
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: `${data.product_name} is added to the techProduct.`,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            }
-        } catch (error) {
-            console.error('Image upload failed:', error);
+        const product = {
+            product_name: data.product_name,
+            // product_image: response.data.data.display_url,
+            product_image: data.product_image,
+            description: data.description,
+            user_name: user?.displayName,
+            user_image: user?.photoURL,
+            user_email: user?.email,
+            tag_input: tags,
+            external_Link: data.external_Link
         }
+        console.log(product);
     }
+
+    const { product_name, description, external_Link } = tech || [];
 
     return (
         <>
-            
+            <Container>
                 <div className="">
                     <div className="pt-5 ">
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -73,9 +58,9 @@ const AddProduct = () => {
                                         <span className="label-text font-semibold">Product Name</span>
                                     </div>
                                     <input
-                                        {...register("product_name", { required: true })}
+                                        {...register("product_name")}
                                         type="text"
-                                        required
+                                        defaultValue={product_name}
                                         placeholder="Product Name"
                                         className="input input-bordered font-medium w-full" />
                                 </label>
@@ -88,8 +73,9 @@ const AddProduct = () => {
 
                                     <input
                                         type="file"
-                                        {...register('product_image', { required: true })}
-                                        required
+                                        {...register('product_image')}
+
+                                        onChange={handleFileChange}
                                         placeholder="Product Image"
                                         className="input input-bordered font-medium w-full" />
                                 </label>
@@ -104,6 +90,7 @@ const AddProduct = () => {
                                     <input
                                         defaultValue={user?.displayName}
                                         {...register("user_name")}
+                                        readOnly
                                         className="input input-bordered font-medium w-full" />
                                 </label>
 
@@ -114,6 +101,7 @@ const AddProduct = () => {
                                     </div>
                                     <input
                                         defaultValue={user?.photoURL}
+                                        readOnly
                                         {...register("user_image")}
                                         className="input input-bordered font-medium w-full" />
                                 </label>
@@ -126,6 +114,7 @@ const AddProduct = () => {
                                     </div>
                                     <input
                                         defaultValue={user?.email}
+                                        readOnly
                                         {...register("user_email")}
                                         className="input input-bordered font-medium w-full" />
                                 </label>
@@ -136,10 +125,11 @@ const AddProduct = () => {
                                         <span className="label-text font-semibold">External Link</span>
                                     </div>
                                     <input
-                                        {...register("external_Link", { required: true })}
+                                        {...register("external_Link")}
                                         type="text"
                                         id="link"
                                         required
+                                        defaultValue={external_Link}
                                         placeholder="Product_Link"
                                         className="input input-bordered font-medium w-full" />
                                 </label>
@@ -171,9 +161,10 @@ const AddProduct = () => {
                                         <span className="label-text font-semibold">Description</span>
                                     </div>
                                     <textarea
-                                        {...register("description", { required: true })}
+                                        {...register("description")}
                                         type="text"
                                         required
+                                        defaultValue={description}
                                         placeholder="Description"
                                         className="textarea textarea-bordered h-24" />
                                 </label>
@@ -182,13 +173,14 @@ const AddProduct = () => {
 
 
                             <button className="btn w-full bg-cyan-600 text-white text-xl font-semibold">
-                                Add Product
+                                Updated Product
                             </button>
                         </form>
                     </div>
                 </div>
+            </Container>
         </>
     );
 };
 
-export default AddProduct;
+export default ProductUpdated;

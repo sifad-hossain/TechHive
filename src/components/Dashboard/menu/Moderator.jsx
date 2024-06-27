@@ -1,14 +1,15 @@
 
-import { FcSettings } from 'react-icons/fc';
+import { MdReport } from 'react-icons/md';
+import { PiQueueLight } from 'react-icons/pi';
 import { NavLink } from 'react-router-dom';
 
 const Moderator = () => {
     return (
         <ul className="menu">
-            <li><FcSettings className="w-5 h-5"></FcSettings><NavLink 
-            to='productQueue'>ProductQueue</NavLink></li>
-            <li><FcSettings className="w-5 h-5"></FcSettings><NavLink 
-            to='reportedProducts'>ReportedProducts</NavLink></li>
+            <li><NavLink 
+            to='productQueue'><PiQueueLight size={20} className='text-primary bg-white'/>ProductQueue</NavLink></li>
+            <li><NavLink 
+            to='reportedProducts'><MdReport size={22} className='bg-white text-red-500' />ReportedProducts</NavLink></li>
         </ul>
     );
 };

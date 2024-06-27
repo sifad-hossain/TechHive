@@ -4,6 +4,8 @@ import { AuthContext } from "../../../../components/authProvider/AuthProvider";
 
 const MyProfile = () => {
     const { user } = useContext(AuthContext)
+
+    
     return (
         <div className='flex justify-center items-center h-screen'>
 

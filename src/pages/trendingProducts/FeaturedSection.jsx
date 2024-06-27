@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import Container from "../shared/container/Container";
 import { Link } from "react-router-dom";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import SectionTitle from "../../components/sectionTitle/SectionTitle";
 
 
 
@@ -44,7 +45,12 @@ const FeaturedSection = () => {
     return (
         <>
             <Container>
-                <div className="grid grid-cols-3  mt-10 -z-10">
+            <SectionTitle
+            heading={"Explore our handpicked selection of top tech innovations and groundbreaking products."}
+            subHeading={"Feautred Section"}>
+            </SectionTitle>
+                {/* <div className="grid grid-cols-3  mt-10 -z-10"> */}
+                <div className="pt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-8">
                     {
                         product.filter(hunt => hunt?.isFeatured === true).map(tech =>
                                 <div key={tech?._id} className="card space-y-5 mb-10 card-compact w-96 bg-base-100 shadow-xl">

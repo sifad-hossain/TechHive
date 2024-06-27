@@ -18,6 +18,7 @@ import Common from "../pages/dashboard/common/Common";
 import ProductQueue from "../pages/dashboard/moderatorDashboard/ProductQueue";
 import ModeratorRoute from "./ModeratorRoute";
 import ReportedProducts from "../pages/dashboard/moderatorDashboard/ReportedProducts"
+import ProductUpdated from "../components/form/ProductUpdated";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -33,9 +34,15 @@ export const router = createBrowserRouter([
         element: <AllProducts></AllProducts>
       },
       {
+        path: 'productUpdate/:_id',
+        loader: ({params}) => fetch(`https://tech-hive-server.vercel.app/products/id/${params?._id}`),
+        element: <ProductUpdated></ProductUpdated>
+      }, 
+      {
         path: "/productDetail/:id",
         element: <ProductDetail></ProductDetail>
-      },
+      }, 
+        
       {
         path: '/login',
         element: <Login></Login>
@@ -63,13 +70,11 @@ export const router = createBrowserRouter([
       {
         path: 'myProducts',
         element: <MyProducts></MyProducts>
-
       },
       {
         path: 'addProducts',
         element: <AddProduct></AddProduct>
-
-      },
+      }, 
       //Moderator Routes
       {
         path:'productQueue',

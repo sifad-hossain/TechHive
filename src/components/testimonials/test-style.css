@@ -9,9 +9,14 @@
  .swiper-pagination {
      bottom: 2px !important;
  }
- .swiper {
+
+
+
+.swiperes {  
     position: static !important;
+    background-color: #c2c0c0 !important;
 }
+
  .swiper-wrapper {
      height: max-content !important;
      width: max-content !important;

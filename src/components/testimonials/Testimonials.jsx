@@ -1,6 +1,5 @@
-
 // Import Swiper styles
-import 'swiper/css';
+// import 'swiper/css';
 import 'swiper/css/pagination';
 import "@smastrom/react-rating/style.css";
 import 'swiper/css/pagination';
@@ -11,6 +10,7 @@ import SectionTitle from '../sectionTitle/SectionTitle';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Rating } from '@smastrom/react-rating';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import "./test-style.css"
 const Testimonials = () => {
     const [reviews, setReviews] = useState([])
     useEffect(() => {
@@ -40,7 +40,7 @@ const Testimonials = () => {
                 navigation={true}
                 modules={[Autoplay, Pagination, Navigation]}
 
-                className="mySwiper">
+                className="mySwiper swiperes">
                 {
                     reviews.map(review => <SwiperSlide
                         key={review._id}
@@ -50,7 +50,7 @@ const Testimonials = () => {
                                 style={{ maxWidth: 180 }}
                                 value={review.rating}
                             ></Rating>
-                            <p className="py-8">{review.review}</p>
+                            <p className="py-8 text-2xl text-black">{review.review}</p>
                             <p className="text-2xl text-orange-400">{review.name}</p>
                         </div>
                     </SwiperSlide>)
